@@ -1,19 +1,4 @@
-"""
-rag_chatbot.py
-==============
 
-CLI front-end for querying the automotive governance RAG system using Chroma.
-
-Commands:
-  ask <question>  Query the knowledge base and show answer with sources.
-
-Examples:
-  # Query without rebuilding index
-  python rag_chatbot.py ask "Explain ASIL decomposition in ISO 26262"
-  # Rebuild embeddings then query
-  python embed_store.py --force
-  python rag_chatbot.py ask "What are ASPICE maturity levels?"
-"""
 import logging
 from pathlib import Path
 from typing import List
@@ -26,9 +11,9 @@ from langchain_openai import ChatOpenAI
 
 from embed_store import load_vectorstore  # renamed helper
 
-# ---------------- Configuration ---------------- #
+# Configuration
 class Settings:
-    """Configuration for RAG chain."""
+    # Configuration for RAG chain.
     chroma_dir: Path = Path(__file__).parent / "chroma_db"
     llm_model: str = "gpt-4o"
     retrieval_k: int = 3
@@ -45,7 +30,7 @@ AUTOMOTIVE_PROMPT = PromptTemplate(
     ),
 )
 
-# ---------------- Logging ---------------- #
+# Logging
 def configure_logging(verbose: bool) -> None:
     level = logging.DEBUG if verbose else logging.INFO
     logging.basicConfig(
@@ -54,9 +39,9 @@ def configure_logging(verbose: bool) -> None:
         datefmt="%H:%M:%S",
     )
 
-# ---------------- RAG Chain ---------------- #
+# RAG Chain 
 def make_chain(settings: Settings) -> RetrievalQA:
-    """Build RetrievalQA chain with Chroma and OpenAI chat model."""
+    # Build RetrievalQA chain with Chroma and OpenAI chat model.
     # Load Chroma store (raises if missing)
     store = load_vectorstore(settings.chroma_dir)
 
@@ -81,7 +66,7 @@ def make_chain(settings: Settings) -> RetrievalQA:
         chain_type_kwargs={"prompt": AUTOMOTIVE_PROMPT},
     )
 
-# ---------------- CLI ---------------- #
+# CLI 
 app = typer.Typer(help="Ask automotive governance questions via RAG")
 
 @app.command()
@@ -90,7 +75,7 @@ def ask(
     k: int = typer.Option(3, help="Number of chunks to retrieve"),
     verbose: bool = typer.Option(False, "-v", help="Enable debug logging"),
 ) -> None:
-    """Query the knowledge base and display answer with source info."""
+    # Query the knowledge base and display answer with source info.
     configure_logging(verbose)
     load_dotenv()  # Load API keys from .env
 

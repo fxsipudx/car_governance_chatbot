@@ -1,14 +1,3 @@
-"""
-load_docs.py
-============
-
-Simple helper to load each PDF page in docs/ as a LangChain Document.
-
-Usage:
-    from load_docs import load_documents
-    docs = load_documents()
-    print(len(docs), "pages loaded")
-"""
 
 import logging
 from pathlib import Path
@@ -25,12 +14,10 @@ DOCS_DIR = Path(__file__).parent / "docs"
 
 
 def load_documents() -> List[Document]:
-    """
-    Load every page from each PDF in DOCS_DIR and return as a list of Documents.
 
-    Raises:
-        FileNotFoundError: If the docs directory does not exist.
-    """
+    # Load every page from each PDF in DOCS_DIR and return as a list of Documents.
+    # Raises: FileNotFoundError: If the docs directory does not exist.
+
     if not DOCS_DIR.is_dir():
         raise FileNotFoundError(f"Docs folder not found: {DOCS_DIR.resolve()}")
 
