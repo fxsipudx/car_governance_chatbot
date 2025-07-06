@@ -13,6 +13,7 @@ Automotive companies often face the challenge of hallucinations when using LLMs 
 - Embeds and stores them in a Chroma vector database.
 - Queries are matched against this database and fed into an OpenAI LLM with context to generate reliable responses.
 - A Streamlit-based frontend is provided for easy interaction.
+- **NEW**: Chain-of-Verification (CoVe) implementation for enhanced answer accuracy.
 
 ## 🚀 Stack
 
@@ -21,6 +22,7 @@ Automotive companies often face the challenge of hallucinations when using LLMs 
 - **Embeddings**: OpenAI Embeddings
 - **Vector DB**: Chroma
 - **Frontend**: Streamlit
+- **Verification**: Chain-of-Verification (CoVe) for reduced hallucinations
 
 ## 🧠 How It Works
 
@@ -30,6 +32,32 @@ Automotive companies often face the challenge of hallucinations when using LLMs 
 4. **rag_chatbot.py** – CLI chatbot that pulls relevant documents and answers using OpenAI + LangChain.
 5. **streamlit_app.py** – Web UI for chatting with the bot.
 6. **test_query.py** – Utility for testing vector retrieval performance.
+
+## 🔍 Chain-of-Verification (CoVe)
+
+We've implemented an enhanced version with Chain-of-Verification to further reduce hallucinations:
+
+- **Standard Version**: `rag_chatbot.py` (original implementation)
+- **CoVe Version**: `rag_chatbot_COVE_version.py` (with verification)
+
+### How CoVe Works:
+1. Generates initial answer using RAG
+2. Creates verification questions about the answer
+3. Retrieves additional context for verification
+4. Revises the answer based on verification evidence
+
+### Using the CoVe Version:
+To activate Chain-of-Verification:
+```bash
+# Option 1: Use directly
+python rag_chatbot_COVE_version.py "Your question here"
+
+# Option 2: Replace the standard version
+rm rag_chatbot.py
+mv rag_chatbot_COVE_version.py rag_chatbot.py
+```
+
+The CoVe version is fully backward compatible and includes a `--no-verification` flag to disable verification if needed.
 
 ## 📁 Folder Structure
 
@@ -42,7 +70,8 @@ car_governance_chatbot/
 ├── load_docs.py
 ├── split_docs.py
 ├── embed_store.py
-├── rag_chatbot.py
+├── rag_chatbot.py              # Standard RAG version
+├── rag_chatbot_COVE_version.py # Enhanced CoVe version
 ├── streamlit_app.py
 ├── test_query.py
 └── .env
@@ -52,10 +81,11 @@ car_governance_chatbot/
 
 - This is a prototype with a small PDF base.
 - Can be scaled with a larger corpus and fine-tuned prompts.
+- CoVe version provides better accuracy at the cost of slightly increased response time.
 
 ## ✅ Status
 
-Functional prototype. Future improvements may include document tagging, confidence scores, and feedback loops.
+Functional prototype with both standard RAG and Chain-of-Verification implementations. Future improvements may include document tagging, confidence scores, and feedback loops.
 
 ## 🧑‍💻 Author
 
