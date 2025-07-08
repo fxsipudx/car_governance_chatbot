@@ -26,7 +26,7 @@ def load_documents() -> List[Document]:
 
     for pdf_path in pdf_paths:
         try:
-            # Load pages from PDF; each page becomes a Document
+            # Load pages from PDF each page becomes a Document
             pages = PyPDFLoader(str(pdf_path)).load()
             docs.extend(pages)
             logger.info("Loaded %d pages from %s", len(pages), pdf_path.name)
