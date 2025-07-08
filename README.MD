@@ -1,4 +1,5 @@
 # Car Governance Chatbot (RAG-based)
+![Description](images/images1.png)
 
 This project is a prototype Retrieval-Augmented Generation (RAG) chatbot tailored for automotive governance use-cases. It uses LangChain, OpenAI LLMs, and a Chroma vector store to answer domain-specific questions based on internal PDF documents.
 
