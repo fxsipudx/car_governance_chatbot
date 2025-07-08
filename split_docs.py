@@ -12,7 +12,7 @@ try:
     from .load_docs import load_documents
 except ImportError:
     # Fallback when running standalone
-    from load_docs import load_documents  # type: ignore
+    from load_docs import load_documents  
 
 # Logger for this module
 logger = logging.getLogger(__name__)
