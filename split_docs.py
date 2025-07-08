@@ -50,19 +50,18 @@ def save_chunks(
     # Pickle chunks list to the given path.
 
     path.write_bytes(pickle.dumps(chunks))
-    logger.info("Saved %d chunks to %s", len(chunks), path)
+    logger.info(f"Saved {len(chunks)} chunks to {path}")
 
 
 def load_chunks(
     path: Path = CHUNKS_PATH,
 ) -> List[Document]:
-
     # Load chunks list from pickle at given path.
-
+    
     if not path.exists():
         raise FileNotFoundError(f"Chunk file not found: {path}")
     chunks = pickle.loads(path.read_bytes())
-    logger.info("Loaded %d chunks from %s", len(chunks), path)
+    logger.info(f"Loaded {len(chunks)} chunks from {path}")
     return chunks
 
 
